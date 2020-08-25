@@ -38,9 +38,14 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
     }
   }
 
+  /**
+   * This method will spawn two numbers which can be either 2 or 4 with randomized positions. In
+   * this class, the method is called at the start of the game and once a move makes a change in
+   * the board.
+   */
   @Override
   public void newTiles() {
-
+    // TODO:
   }
 
   @Override
