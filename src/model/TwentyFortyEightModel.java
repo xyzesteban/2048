@@ -1,6 +1,6 @@
 package model;
 
-
+import java.util.ArrayList;
 
 /**
  * This interface represents the operations offered by the 2048 model. One instance of a model
@@ -16,6 +16,13 @@ public interface TwentyFortyEightModel {
    * @throws IllegalArgumentException if an invalid key is pressed or the move is not possible.
    */
   void move(String key) throws IllegalArgumentException;
+
+  /**
+   * Moves all tiles in one row or column in the direction specified by String key.
+   * @param line The row or column to be merged.
+   * @param key A String representing the input from the user.
+   */
+  ArrayList merge(ArrayList line, String key);
 
   /**
    * Return whether the game is over or not. A game is over if no more moves can be made, or if
