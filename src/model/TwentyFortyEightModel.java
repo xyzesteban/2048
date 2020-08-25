@@ -9,6 +9,12 @@ import java.util.ArrayList;
 public interface TwentyFortyEightModel {
 
   /**
+   * Adds new tiles on the board at the beginning and after a move is made by the player. For
+   * classic 2048, the number can either be 2 or 4
+   */
+  void newTiles();
+
+  /**
    * Move all the tiles in the direction of the arrow keys. A move is valid if and only if there
    * is at least one tile that can move in the specified direction without anything blocking its
    * path. Specific implementations may place additional constraints on the validity of a move.
@@ -18,11 +24,14 @@ public interface TwentyFortyEightModel {
   void move(String key) throws IllegalArgumentException;
 
   /**
-   * Moves all tiles in one row or column in the direction specified by String key.
+   * Helper function to merge single line or column in the 2048 board and returns the result in the
+   * form of an ArrayList. If the move is not valid or causes no change, it will return the
+   * unchanged ArrayList, but in such a case it would be ideal to not call this function.
+   * TODO: Figure out some logic to see if line is merge-able and only call this when needed.
    * @param line The row or column to be merged.
    * @param key A String representing the input from the user.
    */
-  ArrayList merge(ArrayList line, String key);
+  ArrayList merge(ArrayList line);
 
   /**
    * Return whether the game is over or not. A game is over if no more moves can be made, or if
