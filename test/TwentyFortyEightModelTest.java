@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import model.ClassicTwentyFortyEightModelImpl;
 import model.TwentyFortyEightModel;
 import org.junit.jupiter.api.Assertions;
@@ -16,5 +18,15 @@ public class TwentyFortyEightModelTest {
         + "0 0 0 0\n"
         + "0 0 0 0\n"
         + "0 0 0 0\n");
+  }
+
+  /**
+   * Tests for {@link TwentyFortyEightModel}'s merge function
+   */
+  @Test
+  public void testMerge() {
+    TwentyFortyEightModel mod = new ClassicTwentyFortyEightModelImpl();
+    ArrayList array1 = new ArrayList(List.of(0,4,2,2));
+    Assertions.assertEquals(mod.merge(array1), new ArrayList(List.of(0,0,4,4)));
   }
 }

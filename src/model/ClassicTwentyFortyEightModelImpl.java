@@ -85,8 +85,31 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
   }
 
   @Override
-  public ArrayList merge(ArrayList line) {
-    
+  public ArrayList merge(ArrayList<Integer> line) {
+    ArrayList<Integer> newLine = new ArrayList();
+    boolean prevMerged = false;
+    // MERGE
+    for (int i = 0; i < line.size(); i++) {
+      if (line.get(i) == line.get(i + 1) && !prevMerged) {
+        newLine.set(i, 0);
+        prevMerged = true;
+      }
+      else if (prevMerged) {
+        newLine.set(i, line.get(i) * 2);
+        prevMerged = false;
+      }
+      else {
+        newLine.set(i, line.get(i));
+      }
+    }
+    // PUSH
+    for (int i = 1; i < line.size(); i++) {
+      if (line.get(i - 1) != 0 && line.get(i) == 0) {
+        line.set(i, line.get(i - 1));
+        line.set(i - 1, 0);
+      }
+    }
+    return newLine;
   }
 
   @Override

@@ -31,7 +31,7 @@ public interface TwentyFortyEightModel {
    * @param line The row or column to be merged.
    * @param key A String representing the input from the user.
    */
-  ArrayList merge(ArrayList line);
+  ArrayList merge(ArrayList<Integer> line);
 
   /**
    * Return whether the game is over or not. A game is over if no more moves can be made, or if
