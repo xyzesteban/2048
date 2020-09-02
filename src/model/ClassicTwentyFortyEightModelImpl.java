@@ -90,23 +90,23 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
     boolean prevMerged = false;
     // MERGE
     for (int i = 0; i < line.size(); i++) {
+      if (prevMerged) {
+        continue;
+      }
       if (line.get(i) == line.get(i + 1) && !prevMerged) {
-        newLine.set(i, 0);
+        newLine.add(0);
+        newLine.add(line.get(i) * 2);
         prevMerged = true;
       }
-      else if (prevMerged) {
-        newLine.set(i, line.get(i) * 2);
-        prevMerged = false;
-      }
       else {
-        newLine.set(i, line.get(i));
+        newLine.add(line.get(i));
       }
     }
     // PUSH
-    for (int i = 1; i < line.size(); i++) {
-      if (line.get(i - 1) != 0 && line.get(i) == 0) {
-        line.set(i, line.get(i - 1));
-        line.set(i - 1, 0);
+    for (int i = 1; i < newLine.size(); i++) {
+      if (newLine.get(i - 1) != 0 && newLine.get(i) == 0) {
+        newLine.set(i, newLine.get(i - 1));
+        newLine.set(i - 1, 0);
       }
     }
     return newLine;

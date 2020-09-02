@@ -13,11 +13,11 @@ public class TwentyFortyEightModelTest {
   @Test
   public void testGenBoard() {
     TwentyFortyEightModel mod = new ClassicTwentyFortyEightModelImpl();
-    Assertions.assertEquals(mod.getGameState(),
-    "0 0 0 0\n"
-        + "0 0 0 0\n"
-        + "0 0 0 0\n"
-        + "0 0 0 0\n");
+    Assertions.assertEquals(
+    "0 0 0 0 \n"
+        + "0 0 0 0 \n"
+        + "0 0 0 0 \n"
+        + "0 0 0 0 \n", mod.getGameState());
   }
 
   /**
@@ -27,6 +27,7 @@ public class TwentyFortyEightModelTest {
   public void testMerge() {
     TwentyFortyEightModel mod = new ClassicTwentyFortyEightModelImpl();
     ArrayList array1 = new ArrayList(List.of(0,4,2,2));
-    Assertions.assertEquals(mod.merge(array1), new ArrayList(List.of(0,0,4,4)));
+    System.out.println(mod.merge(array1));
+    Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod.merge(array1));
   }
 }
