@@ -86,7 +86,7 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
 
   @Override
   public ArrayList merge(ArrayList line) {
-    return null;
+    
   }
 
   @Override
