@@ -1,6 +1,10 @@
 package model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  * This class implements the TwentyFortyEightModel interface. One instance of this class
@@ -8,6 +12,8 @@ import java.util.ArrayList;
  */
 public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
   ArrayList<ArrayList<Integer>> board; // <--- Contains the game board.
+  int length; // <--- Stores this board's length
+  int height; // <--- Stores this board's height
   int score; // <--- This variable keeps track of the score achieved by the user.
   boolean gameOver; // <--- This variable keeps track about whether or not the game is over.
   // TODO: For now, this tracks whether or not the user reached the 2048 Tile.
@@ -18,9 +24,10 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
    * Default constructor for a ClassicTwentyFortyEightModelImpl.
    */
   public ClassicTwentyFortyEightModelImpl() {
-    this.board = new ArrayList<>();
-    this.score = 0;
-    this.gameOver = false;
+    this.board = new ArrayList<>(); // The board status is stored in a two-dimensional array.
+    this.length = 4;
+    this.height = 4;
+    this.score = 0;this.gameOver = false;
     this.genBoard(4,4);
   }
 
@@ -36,16 +43,40 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
       }
       this.board.add(line);
     }
+    newTile();
+    newTile();
   }
 
   /**
-   * This method will spawn two numbers which can be either 2 or 4 with randomized positions. In
+   * This method will spawn one number which can be either 2 or 4 with randomized positions. In
    * this class, the method is called at the start of the game and once a move makes a change in
    * the board.
    */
   @Override
-  public void newTiles() {
-    // TODO:
+  public void newTile() {
+    Random rand = new Random();
+    boolean zero = false;
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < length; j++) {
+        if (this.board.get(i).get(j) == 0) {
+          zero = true;
+        }
+      }
+    }
+    if (zero) {
+      int targetYPos = rand.nextInt(this.height);
+      int targetXPos = rand.nextInt(this.length);
+
+      while (this.board.get(targetYPos).get(targetXPos) != 0) {
+        targetYPos = rand.nextInt(this.height);
+        targetXPos = rand.nextInt(this.length);
+      }
+
+      ArrayList newNums = new ArrayList(List.of(2,2,2,2,2,4,2,2,2,2));
+      int number = (int) newNums.get(rand.nextInt(newNums.size()));
+
+      this.board.get(targetYPos).set(targetXPos, number);
+    }
   }
 
   @Override

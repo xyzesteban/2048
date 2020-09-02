@@ -12,7 +12,7 @@ public interface TwentyFortyEightModel {
    * Adds new tiles on the board at the beginning and after a move is made by the player. For
    * classic 2048, the number can either be 2 or 4
    */
-  void newTiles();
+  void newTile();
 
   /**
    * Move all the tiles in the direction of the arrow keys. A move is valid if and only if there

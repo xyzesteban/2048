@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class TwentyFortyEightModelTest {
+
   /**
    * Tests for {@link TwentyFortyEightModel}'s genBoard function
    */
