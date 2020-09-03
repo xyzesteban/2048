@@ -19,6 +19,7 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
   // TODO: For now, this tracks whether or not the user reached the 2048 Tile.
   // NOTE: The user should be able to keep playing after reaching 2048.
   boolean complete; // <--- Keeps track of whether or not the user reached the 2048 tile.
+  Random rand; // <--- A Random object for testing.
 
   /**
    * Default constructor for a ClassicTwentyFortyEightModelImpl.
@@ -27,9 +28,24 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
     this.board = new ArrayList<>(); // The board status is stored in a two-dimensional array.
     this.length = 4;
     this.height = 4;
-    this.score = 0;this.gameOver = false;
+    this.score = 0;
+    this.gameOver = false;
+    this.rand = new Random();
     this.genBoard(4,4);
   }
+
+  public ClassicTwentyFortyEightModelImpl(Random rand) {
+    this.board = new ArrayList<>(); // The board status is stored in a two-dimensional array.
+    this.length = 4;
+    this.height = 4;
+    this.score = 0;
+    this.gameOver = false;
+    this.rand = rand;
+    this.genBoard(4,4);
+
+  }
+
+
 
   /**
    * This function generates the starting board for the game.
@@ -54,7 +70,6 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
    */
   @Override
   public void newTile() {
-    Random rand = new Random();
     boolean zero = false;
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < length; j++) {
@@ -64,16 +79,16 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
       }
     }
     if (zero) {
-      int targetYPos = rand.nextInt(this.height);
-      int targetXPos = rand.nextInt(this.length);
+      int targetYPos = this.rand.nextInt(this.height);
+      int targetXPos = this.rand.nextInt(this.length);
 
       while (this.board.get(targetYPos).get(targetXPos) != 0) {
-        targetYPos = rand.nextInt(this.height);
-        targetXPos = rand.nextInt(this.length);
+        targetYPos = this.rand.nextInt(this.height);
+        targetXPos = this.rand.nextInt(this.length);
       }
 
       ArrayList newNums = new ArrayList(List.of(2,2,2,2,2,4,2,2,2,2));
-      int number = (int) newNums.get(rand.nextInt(newNums.size()));
+      int number = (int) newNums.get(this.rand.nextInt(newNums.size()));
 
       this.board.get(targetYPos).set(targetXPos, number);
     }
