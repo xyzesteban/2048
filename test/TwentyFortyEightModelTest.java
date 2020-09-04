@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import model.ATwentyFortyEightModel;
 import model.ClassicTwentyFortyEightModelImpl;
 import model.TwentyFortyEightModel;
 import org.junit.jupiter.api.Assertions;
@@ -9,10 +10,10 @@ import org.junit.jupiter.api.Test;
 public class TwentyFortyEightModelTest {
 
   /**
-   * Tests for {@link TwentyFortyEightModel}'s genBoard function
+   * Tests for {@link TwentyFortyEightModel}'s initial state.
    */
   @Test
-  public void testGenBoard() {
+  public void testInit() {
     Random rand1 = new Random(2);
     Random rand2 = new Random(4);
     Random rand3 = new Random(8);
@@ -62,11 +63,13 @@ public class TwentyFortyEightModelTest {
    */
   @Test
   public void testMerge() {
-    TwentyFortyEightModel mod = new ClassicTwentyFortyEightModelImpl();
+    ATwentyFortyEightModel mod = new ClassicTwentyFortyEightModelImpl();
     ArrayList array1 = new ArrayList(List.of(0,4,2,2));
     ArrayList array2 = new ArrayList(List.of(4,2,2,0));
+    ArrayList array3 = new ArrayList(List.of(2,2,2,2));
     Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod.merge(array1));
     Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod.merge(array2));
     Assertions.assertEquals(mod.merge(array1), mod.merge(array2));
+    Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod.merge(array3));
   }
 }
