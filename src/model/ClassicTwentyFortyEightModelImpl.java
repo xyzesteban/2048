@@ -106,6 +106,11 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
     // MERGE
     for (int i = 0; i < line.size(); i++) {
       if (prevMerged) {
+        prevMerged = false;
+        continue;
+      }
+      if (i == line.size() - 1) {
+        newLine.add(line.get(i));
         continue;
       }
       if (line.get(i) == line.get(i + 1) && !prevMerged) {
@@ -118,10 +123,14 @@ public class ClassicTwentyFortyEightModelImpl implements TwentyFortyEightModel{
       }
     }
     // PUSH
-    for (int i = 1; i < newLine.size(); i++) {
-      if (newLine.get(i - 1) != 0 && newLine.get(i) == 0) {
-        newLine.set(i, newLine.get(i - 1));
-        newLine.set(i - 1, 0);
+    for (int i = (int) (Math.pow(newLine.size(), 2) - 1); i >= 0; i--) {
+      int y = i % newLine.size();
+      if (y == 0) {
+        continue;
+      }
+      if (newLine.get(y) == 0 && newLine.get(y - 1) != 0) {
+        newLine.set(y, newLine.get(y - 1));
+        newLine.set(y - 1, 0);
       }
     }
     return newLine;
