@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -81,7 +82,27 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
 
   @Override
   public void move(String key) throws IllegalArgumentException {
-
+    ArrayList<ArrayList<Integer>> newBoard = new ArrayList();
+    if (key == "right" || key == "D") {
+      for (int i = 0; i < this.height; i++) {
+        newBoard.add(this.merge(this.board.get(i)));
+      }
+    }
+    else if (key == "down" || key == "S") {
+      // TODO
+    }
+    else if (key == "left" || key == "A") {
+      for (int i = 0; i < this.height; i++) {
+        newBoard.add(this.merge(this.board.get(i)));
+        Collections.reverse(newBoard.get(i));
+      }
+    }
+    else if (key == "up" || key == "W") {
+      // TODO
+    }
+    else {
+      throw new IllegalArgumentException("Invalid input. Use arrow keys or WASD to move.");
+    }
   }
 
   @Override
@@ -160,6 +181,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
    * This implementation of the method does the following two actions:
    *     1. MERGE adjacent tiles containing the same number once.
    *     2. PUSH non-zero numbers to the rightmost possible position.
+   *
    * @param line an ArrayList to be "merged"
    * @return A brand new ArrayList with the required changes.
    */

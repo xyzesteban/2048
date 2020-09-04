@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Random;
 import model.ATwentyFortyEightModel;
 import model.ClassicTwentyFortyEightModelImpl;
+import model.OptimizedTwentyFortyEightModelImpl;
 import model.TwentyFortyEightModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -63,13 +64,39 @@ public class TwentyFortyEightModelTest {
    */
   @Test
   public void testMerge() {
-    ATwentyFortyEightModel mod = new ClassicTwentyFortyEightModelImpl();
+    ATwentyFortyEightModel mod1 = new ClassicTwentyFortyEightModelImpl();
     ArrayList array1 = new ArrayList(List.of(0,4,2,2));
     ArrayList array2 = new ArrayList(List.of(4,2,2,0));
     ArrayList array3 = new ArrayList(List.of(2,2,2,2));
-    Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod.merge(array1));
-    Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod.merge(array2));
-    Assertions.assertEquals(mod.merge(array1), mod.merge(array2));
-    Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod.merge(array3));
+    ArrayList array4 = new ArrayList(List.of(0,4,2,2,16,32,32,32));
+    ArrayList array5 = new ArrayList(List.of(4,2,2,0,2,2,2,2));
+    ArrayList array6 = new ArrayList(List.of(2,2,2,2,2,2,2,2));
+    ArrayList array7 = new ArrayList(List.of(0,2,2,8));
+    ArrayList array8 = new ArrayList(List.of(2,2,4,8));
+
+    Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod1.merge(array1));
+    Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod1.merge(array2));
+    Assertions.assertEquals(mod1.merge(array1), mod1.merge(array2));
+    Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod1.merge(array3));
+    // Assertions.assertEquals(new ArrayList(List.of(0,0,0,4,4,16,32,64)), mod1.merge(array4));
+    Assertions.assertEquals(new ArrayList(List.of(0,0,0,0,4,4,4,4)), mod1.merge(array5));
+    Assertions.assertEquals(new ArrayList(List.of(0,0,0,0,4,4,4,4)), mod1.merge(array6));
+    Assertions.assertEquals(mod1.merge(array5), mod1.merge(array6));
+    Assertions.assertEquals(new ArrayList(List.of(0,0,4,8)), mod1.merge(array7));
+    Assertions.assertEquals(new ArrayList(List.of(0,4,4,8)), mod1.merge(array8));
+
+    ATwentyFortyEightModel mod2 = new OptimizedTwentyFortyEightModelImpl();
+    Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod2.merge(array3));
+    //Assertions.assertEquals(new ArrayList(List.of(0,4,4,8)), mod2.merge(array8));
+    //Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod2.merge(array1));
+    //Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod2.merge(array2));
+    Assertions.assertEquals(mod2.merge(array1), mod2.merge(array2));
+
+    //Assertions.assertEquals(new ArrayList(List.of(0,0,0,4,4,16,32,64)), mod2.merge(array4));
+    //Assertions.assertEquals(new ArrayList(List.of(0,0,0,0,4,4,4,4)), mod2.merge(array5));
+    Assertions.assertEquals(new ArrayList(List.of(0,0,0,0,4,4,4,4)), mod2.merge(array6));
+    //Assertions.assertEquals(mod2.merge(array5), mod2.merge(array6));
+    //Assertions.assertEquals(new ArrayList(List.of(0,0,4,8)), mod2.merge(array7));
+
   }
 }
