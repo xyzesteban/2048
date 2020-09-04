@@ -78,7 +78,7 @@ public class TwentyFortyEightModelTest {
     Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod1.merge(array2));
     Assertions.assertEquals(mod1.merge(array1), mod1.merge(array2));
     Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), mod1.merge(array3));
-    // Assertions.assertEquals(new ArrayList(List.of(0,0,0,4,4,16,32,64)), mod1.merge(array4));
+    Assertions.assertEquals(new ArrayList(List.of(0,0,0,4,4,16,32,64)), mod1.merge(array4));
     Assertions.assertEquals(new ArrayList(List.of(0,0,0,0,4,4,4,4)), mod1.merge(array5));
     Assertions.assertEquals(new ArrayList(List.of(0,0,0,0,4,4,4,4)), mod1.merge(array6));
     Assertions.assertEquals(mod1.merge(array5), mod1.merge(array6));

@@ -190,16 +190,16 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
     ArrayList<Integer> newLine = new ArrayList();
     boolean prevMerged = false;
     // MERGE
-    for (int i = 0; i < line.size(); i++) {
+    for (int i = line.size() - 1; i >= 0; i--) {
       if (prevMerged) {
         prevMerged = false;
         continue;
       }
-      if (i == line.size() - 1) {
+      if (i == 0) {
         newLine.add(line.get(i));
         continue;
       }
-      if (line.get(i) == line.get(i + 1) && !prevMerged) {
+      if (line.get(i) == line.get(i - 1) && !prevMerged) {
         newLine.add(0);
         newLine.add(line.get(i) * 2);
         prevMerged = true;
@@ -208,6 +208,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
         newLine.add(line.get(i));
       }
     }
+    Collections.reverse(newLine);
     // PUSH
     for (int i = (int) (Math.pow(newLine.size(), 2) - 1); i >= 0; i--) {
       int y = i % newLine.size();
