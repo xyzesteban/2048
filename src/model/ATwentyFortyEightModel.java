@@ -82,7 +82,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
   @Override
   public void move(String key) throws IllegalArgumentException {
     ArrayList<ArrayList<Integer>> newBoard = this.genBoard();
-    if (key == "right" || key == "D") {
+    if (key == "right" || key == "d") {
       for (int i = 0; i < this.height; i++) {
         ArrayList<Integer> inputRow = new ArrayList();
         for (int j = 0; j < this.length; j++) {
@@ -94,7 +94,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
         }
       }
     }
-    else if (key == "down" || key == "S") {
+    else if (key == "down" || key == "s") {
       for (int j = 0; j < this.length; j++) {
         ArrayList<Integer> inputCol = new ArrayList();
         for (int i = 0; i < this.height; i++) {
@@ -106,7 +106,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
         }
       }
     }
-    else if (key == "left" || key == "A") {
+    else if (key == "left" || key == "a") {
       for (int i = 0; i < this.height; i++) {
         ArrayList<Integer> inputRow = new ArrayList();
         for (int j = 0; j < this.length; j++) {
@@ -120,8 +120,19 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
         }
       }
     }
-    else if (key == "up" || key == "W") {
-
+    else if (key == "up" || key == "w") {
+      for (int j = 0; j < this.length; j++) {
+        ArrayList<Integer> inputCol = new ArrayList();
+        for (int i = 0; i < this.height; i++) {
+          inputCol.add(this.board.get(i).get(j));
+        }
+        Collections.reverse(inputCol);
+        ArrayList<Integer> outputCol = this.merge(inputCol);
+        Collections.reverse(outputCol);
+        for (int i = 0; i < outputCol.size(); i++) {
+          newBoard.get(i).set(j, outputCol.get(i));
+        }
+      }
     }
     else {
       throw new IllegalArgumentException("Invalid input. Use arrow keys or WASD to move.");
@@ -216,29 +227,41 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
    * @return A brand new ArrayList with the required changes.
    */
   public ArrayList merge(ArrayList<Integer> line) {
+    ArrayList<Integer> copy = new ArrayList(line);
+    // PUSH RIGHT
+    for (int i = (int) (Math.pow(copy.size(), 2) - 1); i >= 0; i--) {
+      int y = i % copy.size();
+      if (y == 0) {
+        continue;
+      }
+      if (copy.get(y) == 0 && copy.get(y - 1) != 0) {
+        copy.set(y, copy.get(y - 1));
+        copy.set(y - 1, 0);
+      }
+    }
     ArrayList<Integer> newLine = new ArrayList();
     boolean prevMerged = false;
     // MERGE
-    for (int i = line.size() - 1; i >= 0; i--) {
+    for (int i = copy.size() - 1; i >= 0; i--) {
       if (prevMerged) {
         prevMerged = false;
         continue;
       }
       if (i == 0) {
-        newLine.add(line.get(i));
+        newLine.add(copy.get(i));
         continue;
       }
-      if (line.get(i) == line.get(i - 1) && !prevMerged) {
+      if (copy.get(i) == copy.get(i - 1) && !prevMerged) {
         newLine.add(0);
-        newLine.add(line.get(i) * 2);
+        newLine.add(copy.get(i) * 2);
         prevMerged = true;
       }
       else {
-        newLine.add(line.get(i));
+        newLine.add(copy.get(i));
       }
     }
     Collections.reverse(newLine);
-    // PUSH
+    // PUSH ONCE AGAIN
     for (int i = (int) (Math.pow(newLine.size(), 2) - 1); i >= 0; i--) {
       int y = i % newLine.size();
       if (y == 0) {

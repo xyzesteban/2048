@@ -122,15 +122,39 @@ public class TwentyFortyEightModelTest {
             + "2 0 2 4 \n", this.mod1.getGameState());
     this.mod1.move("left");
     Assertions.assertEquals(
-        "2 0 0 0 \n"
+        "2 0 2 0 \n"
             + "0 0 0 0 \n"
             + "2 0 0 0 \n"
-            + "4 4 0 0 \n", this.mod1.getGameState());
+            + "4 4 2 0 \n", this.mod1.getGameState());
     this.mod1.move("up");
     Assertions.assertEquals(
-        "4 4 0 0 \n"
-            + "4 0 0 0 \n"
+        "4 4 4 0 \n"
+            + "4 2 0 0 \n"
             + "0 0 0 0 \n"
+            + "0 2 0 0 \n", this.mod1.getGameState());
+    this.mod1.move("d");
+    Assertions.assertEquals(
+        "0 0 4 8 \n"
+            + "0 4 4 2 \n"
+            + "0 0 0 0 \n"
+            + "0 0 2 2 \n", this.mod1.getGameState());
+    this.mod1.move("s");
+    Assertions.assertEquals(
+        "2 0 0 2 \n"
+            + "0 0 0 0 \n"
+            + "0 0 8 8 \n"
+            + "0 4 2 4 \n", this.mod1.getGameState());
+    this.mod1.move("a");
+    Assertions.assertEquals(
+        "4 0 2 0 \n"
+            + "0 0 0 0 \n"
+            + "16 0 2 0 \n"
+            + "4 2 4 0 \n", this.mod1.getGameState());
+    this.mod1.move("w");
+    Assertions.assertEquals(
+        "4 2 4 0 \n"
+            + "16 0 4 0 \n"
+            + "4 0 2 2 \n"
             + "0 0 0 0 \n", this.mod1.getGameState());
   }
 
@@ -157,13 +181,12 @@ public class TwentyFortyEightModelTest {
     //Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), this.modO.merge(array1));
     //Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), this.modO.merge(array2));
     Assertions.assertEquals(this.modO.merge(array1), this.modO.merge(array2));
-
     //Assertions.assertEquals(new ArrayList(List.of(0,0,0,4,4,16,32,64)), this.modO.merge(array4));
     //Assertions.assertEquals(new ArrayList(List.of(0,0,0,0,4,4,4,4)), this.modO.merge(array5));
     Assertions.assertEquals(new ArrayList(List.of(0,0,0,0,4,4,4,4)), this.modO.merge(array6));
     //Assertions.assertEquals(this.modO.merge(array5), this.modO.merge(array6));
     //Assertions.assertEquals(new ArrayList(List.of(0,0,4,8)), this.modO.merge(array7));
-    Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), this.modO.merge(array9));
+    //Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), this.modO.merge(array9));
 
   }
 }
