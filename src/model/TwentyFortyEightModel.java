@@ -15,6 +15,7 @@ public interface TwentyFortyEightModel {
    *
    * @param key A String representing the input from the user
    * @throws IllegalArgumentException if an invalid key is pressed or the move is not possible.
+   * @return Boolean to determine whether the board changed
    */
   void move(String key) throws IllegalArgumentException;
 

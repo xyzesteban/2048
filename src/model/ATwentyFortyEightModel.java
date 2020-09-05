@@ -81,8 +81,37 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
 
   @Override
   public void move(String key) throws IllegalArgumentException {
-    ArrayList<ArrayList<Integer>> newBoard = this.genBoard();
+    ArrayList<ArrayList<Integer>> newBoard;
     if (key == "right" || key == "d") {
+      newBoard = moveBoard("right");
+    }
+    else if (key == "down" || key == "s") {
+      newBoard = moveBoard("down");
+    }
+    else if (key == "left" || key == "a") {
+      newBoard = moveBoard("left");
+    }
+    else if (key == "up" || key == "w") {
+      newBoard = moveBoard("up");
+    }
+    else {
+      throw new IllegalArgumentException("Invalid input. Use arrow keys or WASD to move.");
+    }
+    if (newBoard != this.board) {
+      this.board = newBoard;
+      this.newTile();
+      this.newTile();
+    }
+  }
+
+  /**
+   * This is a helper that will return a copy of the board with the move applied. Also used to
+   * check if there exist any more possible moves in isGameOver()
+   * @return
+   */
+  public ArrayList<ArrayList<Integer>> moveBoard(String dir) {
+    ArrayList<ArrayList<Integer>> newBoard = new ArrayList(this.board);
+    if (dir == "right") {
       for (int i = 0; i < this.height; i++) {
         ArrayList<Integer> inputRow = new ArrayList();
         for (int j = 0; j < this.length; j++) {
@@ -94,7 +123,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
         }
       }
     }
-    else if (key == "down" || key == "s") {
+    else if (dir == "down") {
       for (int j = 0; j < this.length; j++) {
         ArrayList<Integer> inputCol = new ArrayList();
         for (int i = 0; i < this.height; i++) {
@@ -106,7 +135,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
         }
       }
     }
-    else if (key == "left" || key == "a") {
+    else if (dir == "left") {
       for (int i = 0; i < this.height; i++) {
         ArrayList<Integer> inputRow = new ArrayList();
         for (int j = 0; j < this.length; j++) {
@@ -120,7 +149,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
         }
       }
     }
-    else if (key == "up" || key == "w") {
+    else if (dir == "up") {
       for (int j = 0; j < this.length; j++) {
         ArrayList<Integer> inputCol = new ArrayList();
         for (int i = 0; i < this.height; i++) {
@@ -137,11 +166,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
     else {
       throw new IllegalArgumentException("Invalid input. Use arrow keys or WASD to move.");
     }
-    if (newBoard != this.board) {
-      this.board = newBoard;
-      this.newTile();
-      this.newTile();
-    }
+    return newBoard;
   }
 
   @Override
@@ -151,7 +176,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
 
   @Override
   public String getGameState() {
-    // TODO: There's probably a better way to do this without for loops or type-casting...
+    // TODO: There's probably a better way to do this without for-loops or type-casting...
     String out = "";
     for (int i = 0; i < this.board.size(); i++) {
       String line = "";
@@ -167,7 +192,8 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
 
   @Override
   public int getScore() {
-    return 0;
+    // TODO: Will implement updating score with moves later in the project
+    return this.score;
   }
 
   /**
