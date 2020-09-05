@@ -15,9 +15,9 @@ import java.util.Random;
  * TODO: Explore what other configurations may be created for 2048 and what elements they share
  */
 public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
-  protected ArrayList<ArrayList<Integer>> board; // <--- Stores the board for the game as an ArrayList
   protected int height; // <--- int to represent the number of rows in the board
   protected int length; // <--- int to represent the number of cols in the board
+  protected ArrayList<ArrayList<Integer>> board; // <--- Stores the board for the game
   protected int score; // <--- int to keep track of the score achieved by the user
   protected boolean complete; // <--- Has the user reached the 2048 tile?
   protected boolean gameOver; // <--- Are no more moves possible?
@@ -68,40 +68,68 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
     if (height <= 0 || length <= 0) {
       throw new IllegalArgumentException("Values for height & length must be positive numbers.");
     }
-    this.board = new ArrayList();
     this.height = height;
     this.length = length;
+    this.board = this.genBoard();
     this.score = 0;
     this.complete = false;
     this.gameOver = false;
     this.rand = rand;
-    this.genBoard();
     this.newTile();
     this.newTile();
   }
 
   @Override
   public void move(String key) throws IllegalArgumentException {
-    ArrayList<ArrayList<Integer>> newBoard = new ArrayList();
+    ArrayList<ArrayList<Integer>> newBoard = this.genBoard();
     if (key == "right" || key == "D") {
       for (int i = 0; i < this.height; i++) {
-        newBoard.add(this.merge(this.board.get(i)));
+        ArrayList<Integer> inputRow = new ArrayList();
+        for (int j = 0; j < this.length; j++) {
+          inputRow.add(this.board.get(i).get(j));
+        }
+        ArrayList<Integer> outputRow = this.merge(inputRow);
+        for (int j = 0; j < outputRow.size(); j++) {
+          newBoard.get(i).set(j, outputRow.get(j));
+        }
       }
     }
     else if (key == "down" || key == "S") {
-      // TODO
+      for (int j = 0; j < this.length; j++) {
+        ArrayList<Integer> inputCol = new ArrayList();
+        for (int i = 0; i < this.height; i++) {
+          inputCol.add(this.board.get(i).get(j));
+        }
+        ArrayList<Integer> outputCol = this.merge(inputCol);
+        for (int i = 0; i < outputCol.size(); i++) {
+          newBoard.get(i).set(j, outputCol.get(i));
+        }
+      }
     }
     else if (key == "left" || key == "A") {
       for (int i = 0; i < this.height; i++) {
-        newBoard.add(this.merge(this.board.get(i)));
-        Collections.reverse(newBoard.get(i));
+        ArrayList<Integer> inputRow = new ArrayList();
+        for (int j = 0; j < this.length; j++) {
+          inputRow.add(this.board.get(i).get(j));
+        }
+        Collections.reverse(inputRow);
+        ArrayList<Integer> outputRow = this.merge(inputRow);
+        Collections.reverse(outputRow);
+        for (int j = 0; j < outputRow.size(); j++) {
+          newBoard.get(i).set(j, outputRow.get(j));
+        }
       }
     }
     else if (key == "up" || key == "W") {
-      // TODO
+
     }
     else {
       throw new IllegalArgumentException("Invalid input. Use arrow keys or WASD to move.");
+    }
+    if (newBoard != this.board) {
+      this.board = newBoard;
+      this.newTile();
+      this.newTile();
     }
   }
 
@@ -136,14 +164,16 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
    * in this instance of the model. This function modifies the board in place and assumes the height
    * & length
    */
-  public void genBoard() {
+  public ArrayList<ArrayList<Integer>> genBoard() {
+    ArrayList<ArrayList<Integer>> newBoard = new ArrayList();
     for (int i = 0; i < this.height; i++) {
       ArrayList line = new ArrayList<>();
       for (int j = 0; j < this.length; j++) {
         line.add(0);
       }
-      this.board.add(line);
+      newBoard.add(line);
     }
+    return newBoard;
   }
 
   /**
@@ -186,7 +216,6 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
    * @return A brand new ArrayList with the required changes.
    */
   public ArrayList merge(ArrayList<Integer> line) {
-    // TODO: Implement the optimized algorithm in a separate ModelImpl class.
     ArrayList<Integer> newLine = new ArrayList();
     boolean prevMerged = false;
     // MERGE

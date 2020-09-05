@@ -66,6 +66,7 @@ public class OptimizedTwentyFortyEightModelImpl extends ATwentyFortyEightModel{
    */
   @Override
   public ArrayList merge(ArrayList<Integer> line) {
+    // TODO: Fix to pass pending test cases.
     ArrayList<Integer> newLine = new ArrayList();
     ArrayList<Integer> zeroes = new ArrayList();
     for (int i = line.size() - 1; i >= 0; i--) {
