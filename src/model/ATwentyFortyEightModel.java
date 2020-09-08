@@ -82,16 +82,16 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
   @Override
   public void move(String key) throws IllegalArgumentException {
     ArrayList<ArrayList<Integer>> newBoard;
-    if (key == "right" || key == "d") {
+    if (key.equals("right") || key.equals("d")) {
       newBoard = moveBoard("right");
     }
-    else if (key == "down" || key == "s") {
+    else if (key.equals("down") || key.equals("s")) {
       newBoard = moveBoard("down");
     }
-    else if (key == "left" || key == "a") {
+    else if (key.equals("left") || key.equals("a")) {
       newBoard = moveBoard("left");
     }
-    else if (key == "up" || key == "w") {
+    else if (key.equals("up") || key.equals("w")) {
       newBoard = moveBoard("up");
     }
     else {
@@ -115,7 +115,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
     for (int i = 0; i < this.board.size(); i++) {
       newBoard.add(new ArrayList(this.board.get(i)));
     }
-    if (dir == "right") {
+    if (dir.equals("right")) {
       for (int i = 0; i < this.height; i++) {
         ArrayList<Integer> inputRow = new ArrayList();
         for (int j = 0; j < this.length; j++) {
@@ -127,7 +127,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
         }
       }
     }
-    else if (dir == "down") {
+    else if (dir.equals("down")) {
       for (int j = 0; j < this.length; j++) {
         ArrayList<Integer> inputCol = new ArrayList();
         for (int i = 0; i < this.height; i++) {
@@ -139,7 +139,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
         }
       }
     }
-    else if (dir == "left") {
+    else if (dir.equals("left")) {
       for (int i = 0; i < this.height; i++) {
         ArrayList<Integer> inputRow = new ArrayList();
         for (int j = 0; j < this.length; j++) {
@@ -153,7 +153,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
         }
       }
     }
-    else if (dir == "up") {
+    else if (dir.equals("up")) {
       for (int j = 0; j < this.length; j++) {
         ArrayList<Integer> inputCol = new ArrayList();
         for (int i = 0; i < this.height; i++) {
@@ -175,16 +175,16 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
 
   @Override
   public boolean isGameOver() {
-    if (moveBoard("right") != this.board) {
+    if (!moveBoard("right").equals(this.board)) {
       return false;
     }
-    if (moveBoard("down") != this.board) {
+    if (!moveBoard("down").equals(this.board)) {
       return false;
     }
-    if (moveBoard("left") != this.board) {
+    if (!moveBoard("left").equals(this.board)) {
       return false;
     }
-    if (moveBoard("up") != this.board) {
+    if (!moveBoard("up").equals(this.board)) {
       return false;
     }
     return true;

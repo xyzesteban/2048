@@ -43,17 +43,18 @@ public class TwentyFortyEightControllerImpl implements TwentyFortyEightControlle
     }
     try {
       this.ap.append(model.getGameState() + "\nScore: " + model.getScore() + "\n");
-      Scanner scanner = new Scanner(System.in);
+      Scanner scan = new Scanner(this.rd);
       while (!model.isGameOver()) {
-        if (scanner.hasNext()) {
-          String input = scanner.nextLine();
-          if (input.equalsIgnoreCase("q")) {
+        if (scan.hasNextLine()) {
+          String message = scan.nextLine();
+          if (message.equalsIgnoreCase("q")) {
             this.ap.append("Game quit!\nState of game when quit:\n"
                 + model.getGameState() + "\nScore: " + model.getScore());
+            return;
           }
           else {
             try {
-              model.move(input);
+              model.move(message);
               this.ap.append(model.getGameState() + "\nScore: " + model.getScore() + "\n");
             } catch (IllegalArgumentException ex) {
               this.ap.append(ex.getMessage() + "\n");
