@@ -98,6 +98,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
       throw new IllegalArgumentException("Invalid input. Use arrow keys or WASD to move.");
     }
     if (newBoard != this.board) {
+      this.updateScore(newBoard);
       this.board = newBoard;
       this.newTile();
       this.newTile();
@@ -110,12 +111,15 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
    * @return
    */
   public ArrayList<ArrayList<Integer>> moveBoard(String dir) {
-    ArrayList<ArrayList<Integer>> newBoard = new ArrayList(this.board);
+    ArrayList<ArrayList<Integer>> newBoard = new ArrayList();
+    for (int i = 0; i < this.board.size(); i++) {
+      newBoard.add(new ArrayList(this.board.get(i)));
+    }
     if (dir == "right") {
       for (int i = 0; i < this.height; i++) {
         ArrayList<Integer> inputRow = new ArrayList();
         for (int j = 0; j < this.length; j++) {
-          inputRow.add(this.board.get(i).get(j));
+          inputRow.add(newBoard.get(i).get(j));
         }
         ArrayList<Integer> outputRow = this.merge(inputRow);
         for (int j = 0; j < outputRow.size(); j++) {
@@ -127,7 +131,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
       for (int j = 0; j < this.length; j++) {
         ArrayList<Integer> inputCol = new ArrayList();
         for (int i = 0; i < this.height; i++) {
-          inputCol.add(this.board.get(i).get(j));
+          inputCol.add(newBoard.get(i).get(j));
         }
         ArrayList<Integer> outputCol = this.merge(inputCol);
         for (int i = 0; i < outputCol.size(); i++) {
@@ -139,7 +143,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
       for (int i = 0; i < this.height; i++) {
         ArrayList<Integer> inputRow = new ArrayList();
         for (int j = 0; j < this.length; j++) {
-          inputRow.add(this.board.get(i).get(j));
+          inputRow.add(newBoard.get(i).get(j));
         }
         Collections.reverse(inputRow);
         ArrayList<Integer> outputRow = this.merge(inputRow);
@@ -153,7 +157,7 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
       for (int j = 0; j < this.length; j++) {
         ArrayList<Integer> inputCol = new ArrayList();
         for (int i = 0; i < this.height; i++) {
-          inputCol.add(this.board.get(i).get(j));
+          inputCol.add(newBoard.get(i).get(j));
         }
         Collections.reverse(inputCol);
         ArrayList<Integer> outputCol = this.merge(inputCol);
@@ -171,7 +175,19 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
 
   @Override
   public boolean isGameOver() {
-    return false;
+    if (moveBoard("right") != this.board) {
+      return false;
+    }
+    if (moveBoard("down") != this.board) {
+      return false;
+    }
+    if (moveBoard("left") != this.board) {
+      return false;
+    }
+    if (moveBoard("up") != this.board) {
+      return false;
+    }
+    return true;
   }
 
   @Override
@@ -192,7 +208,6 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
 
   @Override
   public int getScore() {
-    // TODO: Will implement updating score with moves later in the project
     return this.score;
   }
 
@@ -299,5 +314,27 @@ public abstract class ATwentyFortyEightModel implements TwentyFortyEightModel {
       }
     }
     return newLine;
+  }
+
+  /**
+   * Helper to update user's score based on a new instance of the board. This function is called
+   * from move() and only when the board changes. Otherwise, the score stays the same.
+   */
+  public void updateScore(ArrayList<ArrayList<Integer>> newBoard) {
+     ArrayList<Integer> allNew = new ArrayList();
+     for (int i = 0; i < newBoard.size(); i++) {
+       allNew.addAll(newBoard.get(i));
+     }
+     ArrayList<Integer> allPrev = new ArrayList();
+     for (int i = 0; i < this.board.size(); i++) {
+       allPrev.addAll(this.board.get(i));
+     }
+     ArrayList<Integer> diff = new ArrayList(allNew);
+     allPrev.forEach(i -> {
+       diff.remove(i);
+     });
+     for (int i = 0; i < diff.size(); i++) {
+       this.score += diff.get(i);
+     }
   }
 }

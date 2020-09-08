@@ -64,43 +64,7 @@ public class TwentyFortyEightModelTest {
     this.array9 = new ArrayList(List.of(4,2,0,2));
   }
 
-  /**
-   * Tests for {@link TwentyFortyEightModel}'s getGameState function & initial state.
-   */
-  @Test
-  public void testGetGameState() {
-    this.initData();
-    Assertions.assertEquals(
-    "0 2 0 0 \n"
-        + "0 0 0 0 \n"
-        + "0 2 0 0 \n"
-        + "0 0 0 0 \n", this.mod1.getGameState());
-    Assertions.assertEquals(
-        "0 0 0 0 \n"
-            + "0 0 0 0 \n"
-            + "0 0 0 2 \n"
-            + "0 0 0 4 \n", this.mod2.getGameState());
-    Assertions.assertEquals(
-        "2 0 0 0 \n"
-            + "0 0 0 0 \n"
-            + "0 0 0 2 \n"
-            + "0 0 0 0 \n", this.mod3.getGameState());
-    Assertions.assertEquals(
-        "0 0 0 0 \n"
-            + "0 0 0 0 \n"
-            + "0 0 4 0 \n"
-            + "0 0 2 0 \n", this.mod4.getGameState());
-    Assertions.assertEquals(
-        "0 0 0 0 \n"
-            + "0 0 0 0 \n"
-            + "2 0 0 0 \n"
-            + "2 0 0 0 \n", this.mod5.getGameState());
-    Assertions.assertEquals(
-        "0 0 2 0 \n"
-            + "0 0 0 0 \n"
-            + "0 2 0 0 \n"
-            + "0 0 0 0 \n", this.mod6.getGameState());
-  }
+
 
   /**
    * Tests for {@link TwentyFortyEight}'s move method.
@@ -159,6 +123,14 @@ public class TwentyFortyEightModelTest {
   }
 
   /**
+   * Tests for {@link TwentyFortyEightModel}'s isGameOver() method.
+   */
+  @Test
+  public void testIsGameOver() {
+    // TODO: Implement tests, may need to create new constructor to use custom board.
+  }
+
+  /**
    * Tests for {@link TwentyFortyEightModel}'s merge method.
    */
   @Test
@@ -187,6 +159,67 @@ public class TwentyFortyEightModelTest {
     //Assertions.assertEquals(this.modO.merge(array5), this.modO.merge(array6));
     //Assertions.assertEquals(new ArrayList(List.of(0,0,4,8)), this.modO.merge(array7));
     //Assertions.assertEquals(new ArrayList(List.of(0,0,4,4)), this.modO.merge(array9));
+  }
 
+  /**
+   * Tests for {@link TwentyFortyEightModel}'s getGameState function & initial state.
+   */
+  @Test
+  public void testGetGameState() {
+    this.initData();
+    Assertions.assertEquals(
+        "0 2 0 0 \n"
+            + "0 0 0 0 \n"
+            + "0 2 0 0 \n"
+            + "0 0 0 0 \n", this.mod1.getGameState());
+    Assertions.assertEquals(
+        "0 0 0 0 \n"
+            + "0 0 0 0 \n"
+            + "0 0 0 2 \n"
+            + "0 0 0 4 \n", this.mod2.getGameState());
+    Assertions.assertEquals(
+        "2 0 0 0 \n"
+            + "0 0 0 0 \n"
+            + "0 0 0 2 \n"
+            + "0 0 0 0 \n", this.mod3.getGameState());
+    Assertions.assertEquals(
+        "0 0 0 0 \n"
+            + "0 0 0 0 \n"
+            + "0 0 4 0 \n"
+            + "0 0 2 0 \n", this.mod4.getGameState());
+    Assertions.assertEquals(
+        "0 0 0 0 \n"
+            + "0 0 0 0 \n"
+            + "2 0 0 0 \n"
+            + "2 0 0 0 \n", this.mod5.getGameState());
+    Assertions.assertEquals(
+        "0 0 2 0 \n"
+            + "0 0 0 0 \n"
+            + "0 2 0 0 \n"
+            + "0 0 0 0 \n", this.mod6.getGameState());
+  }
+
+  /**
+   * Tests for {@link TwentyFortyEight}'s getScore method.
+   */
+  @Test
+  public void testGetScore() {
+    this.initData();
+    this.mod1.move("right");
+    Assertions.assertEquals(0, this.mod1.getScore());
+    this.mod1.move("down");
+    Assertions.assertEquals(4, this.mod1.getScore());
+    this.mod1.move("left");
+    Assertions.assertEquals(8, this.mod1.getScore());
+    this.mod1.move("up");
+    Assertions.assertEquals(16, this.mod1.getScore());
+    this.mod1.move("d");
+    Assertions.assertEquals(24, this.mod1.getScore());
+    this.mod1.move("s");
+    Assertions.assertEquals(32, this.mod1.getScore());
+    this.mod1.move("a");
+    Assertions.assertEquals(52, this.mod1.getScore());
+    this.mod1.move("w");
+    Assertions.assertEquals(56, this.mod1.getScore());
   }
 }
